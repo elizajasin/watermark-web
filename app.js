@@ -32,7 +32,7 @@ addWatermarkButton.addEventListener('click', () => {
     }
 
     ctx.drawImage(image, 0, 0);
-    ctx.font = '20px Arial';
+    ctx.font = 'bold 20px Arial';
     ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
     ctx.textAlign = 'center';
 
@@ -42,7 +42,7 @@ addWatermarkButton.addEventListener('click', () => {
 
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate((45 * Math.PI) / 180);
+    ctx.rotate((-35 * Math.PI) / 180);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
     for (let y = -canvas.height; y < canvas.height * 2; y += stepY) {
