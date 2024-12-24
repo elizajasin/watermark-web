@@ -32,10 +32,26 @@ addWatermarkButton.addEventListener('click', () => {
     }
 
     ctx.drawImage(image, 0, 0);
-    ctx.font = '30px Arial';
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-    ctx.textAlign = 'right';
-    ctx.fillText(text, canvas.width - 20, canvas.height - 20);
+    ctx.font = '20px Arial';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.textAlign = 'center';
+
+    const textWidth = ctx.measureText(text).width;
+    const stepX = textWidth + 50;
+    const stepY = 50;
+
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.rotate((45 * Math.PI) / 180);
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+
+    for (let y = -canvas.height; y < canvas.height * 2; y += stepY) {
+        for (let x = -canvas.width; x < canvas.width * 2; x += stepX) {
+            ctx.fillText(text, x + stepX / 2, y + stepY / 2);
+        }
+    }
+
+    ctx.restore();
 });
 
 downloadButton.addEventListener('click', () => {
