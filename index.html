@@ -1,21 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Watermark Adder</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Watermark — add a watermark to your image</title>
+  <meta name="description" content="Add a text watermark to any image, right in your browser. Nothing is uploaded — your images never leave your device." />
+  <meta name="theme-color" content="#FBFBF9" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<h1>Add Watermark to a Picture</h1>
-<input type="file" id="imageInput" accept="image/*">
-<div class="controls">
-  <input type="text" id="watermarkText" placeholder="Enter watermark text">
-  <button id="addWatermark">Add Watermark</button>
-  <button id="downloadImage">Download Image</button>
-</div>
-<canvas id="canvas" width="800" height="600"></canvas>
+  <header class="site-header">
+    <div class="wordmark">Watermark<span class="dot"></span></div>
+  </header>
 
-<script src="app.js"></script>
+  <main class="layout">
+    <!-- Preview column -->
+    <section class="preview-col">
+      <div class="intro">
+        <h1>Add a watermark to your image</h1>
+        <p>Drop in a photo, type your text, and download. Everything runs in your browser — your image is never uploaded.</p>
+      </div>
+
+      <!-- Empty / dropzone state -->
+      <div id="dropzone" class="dropzone">
+        <div class="dz-icon">
+          <div class="dz-icon-inner">
+            <span class="dz-dot"></span>
+            <span class="dz-fold"></span>
+          </div>
+        </div>
+        <div class="dz-title">Drop an image here</div>
+        <div class="dz-sub">or click to browse from your device</div>
+        <div class="dz-formats">PNG · JPG · WEBP</div>
+        <button id="sampleBtn" type="button" class="dz-sample">Try it with a sample image</button>
+      </div>
+
+      <!-- Image / editing state -->
+      <div id="imageCard" class="image-card" hidden>
+        <div class="image-card-bar">
+          <div class="file-meta">
+            <span id="fileName" class="file-pill">image.png</span>
+            <span id="fileDims" class="file-dims"></span>
+          </div>
+          <button id="replaceBtn" type="button" class="btn-secondary">Replace</button>
+        </div>
+        <div class="canvas-frame">
+          <canvas id="canvas"></canvas>
+        </div>
+      </div>
+
+      <input type="file" id="fileInput" accept="image/*" hidden />
+    </section>
+
+    <!-- Controls column -->
+    <aside class="controls-col">
+      <div class="panel">
+        <div class="panel-body">
+          <div class="field">
+            <label class="field-label" for="textInput">Watermark text</label>
+            <input type="text" id="textInput" class="text-input" placeholder="Enter watermark text" value="CONFIDENTIAL" />
+          </div>
+
+          <div class="field">
+            <span class="field-label">Color</span>
+            <div class="swatches" id="swatches">
+              <button type="button" class="swatch is-light" data-color="#FFFFFF" style="background:#FFFFFF"></button>
+              <button type="button" class="swatch" data-color="#000000" style="background:#000000"></button>
+              <button type="button" class="swatch" data-color="#2E5BFF" style="background:#2E5BFF"></button>
+              <button type="button" class="swatch" data-color="#FF3B30" style="background:#FF3B30"></button>
+              <button type="button" class="swatch" data-color="#FFD400" style="background:#FFD400"></button>
+              <label class="swatch-custom">
+                <input type="color" id="colorInput" value="#FFFFFF" />
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <span class="field-label">Opacity</span>
+              <span class="field-value" id="opacityVal">35%</span>
+            </div>
+            <input type="range" id="opacity" min="0" max="100" value="35" />
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <span class="field-label">Size</span>
+              <span class="field-value" id="sizeVal">4%</span>
+            </div>
+            <input type="range" id="size" min="1" max="14" step="1" value="4" />
+          </div>
+
+          <div class="field">
+            <span class="field-label">Style</span>
+            <div class="segmented" id="styleSeg">
+              <button type="button" class="seg is-active" data-style="tiled">Tiled</button>
+              <button type="button" class="seg" data-style="single">Single</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-head">
+              <span class="field-label">Rotation</span>
+              <span class="field-value" id="angleVal">-35°</span>
+            </div>
+            <input type="range" id="angle" min="-90" max="90" step="1" value="-35" />
+          </div>
+
+          <div class="field" id="positionField" hidden>
+            <label class="field-label" for="position">Position</label>
+            <select id="position" class="select">
+              <option value="center">Center</option>
+              <option value="top-left">Top left</option>
+              <option value="top-right">Top right</option>
+              <option value="bottom-left">Bottom left</option>
+              <option value="bottom-right">Bottom right</option>
+              <option value="bottom-center">Bottom center</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <button id="downloadBtn" type="button" class="btn-primary" disabled>Add an image to start</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-note">100% client-side · no uploads · no tracking</span>
+    <span class="footer-note">Built by <a href="https://github.com/elizajasin" target="_blank" rel="noopener">@elizajasin</a></span>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>

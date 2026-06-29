@@ -1,21 +1,39 @@
-# Watermark Adder Web App
+# Watermark
 
-This is a simple web application that allows users to add a watermark text to an image. Users can upload an image, specify the watermark text, and download the watermarked image.
+A simple, privacy-first web app for adding a text watermark to any image — right in your browser. **Nothing is ever uploaded.** Every pixel is processed locally using the Canvas API, so your images never leave your device.
+
+🔗 **Live app:** [elizajasin.github.io/watermark-web](https://elizajasin.github.io/watermark-web/)
 
 ## Features
-- Upload an image from your device
-- Add custom watermark text
-- Watermark is repeated across the entire image at a 45-degree angle
-- Watermark text is bold for better visibility
-- Download the watermarked image
+
+- **Drag-and-drop or click to upload** an image (PNG, JPG, WEBP)
+- **Live preview** — the watermark updates instantly as you adjust any setting
+- **Custom watermark text**
+- **Color** — quick swatches plus a full custom color picker
+- **Opacity** control (0–100%)
+- **Size** control (relative to the image, so it scales to any resolution)
+- **Two styles:**
+  - **Tiled** — text repeated across the whole image at an angle
+  - **Single** — one watermark, with selectable position (center, corners, bottom-center)
+- **Rotation** control (−90° to 90°)
+- **One-click download** of the watermarked image as a PNG
+- **100% client-side** — no uploads, no servers, no tracking
+- **Responsive** — works on desktop, tablet, and mobile
+
+## Privacy
+
+This app does not store, transmit, or upload any user data. All image processing happens locally in your browser via the HTML5 Canvas API. You can use it with sensitive images with confidence.
 
 ## Technologies Used
+
 - HTML
 - CSS
 - JavaScript (Canvas API)
-- Vite (for development and build process)
+- Vite (development and build)
+- Google Fonts (Bricolage Grotesque, Hanken Grotesk, JetBrains Mono)
 
 ## How to Run the Project
+
 1. Clone this repository or download the files.
 2. Open a terminal and navigate to the project folder.
 3. Install dependencies:
@@ -26,8 +44,8 @@ This is a simple web application that allows users to add a watermark text to an
    ```sh
    npm run dev
    ```
-5. Open the provided localhost URL in your web browser.
-6. To build the project for production:
+5. Open the provided localhost URL in your browser.
+6. To build for production:
    ```sh
    npm run build
    ```
@@ -37,24 +55,22 @@ This is a simple web application that allows users to add a watermark text to an
    ```
 
 ## File Structure
+
 ```
-watermark-web-app/
-│-- index.html       # Main HTML file
+watermark-web/
+│-- index.html       # Main HTML structure
 │-- styles.css       # Styling for the app
-│-- app.js           # JavaScript functionality
+│-- app.js           # Watermarking logic (Canvas API)
+│-- favicon.svg      # App icon
 │-- package.json     # Project dependencies and scripts
 │-- README.md        # Project documentation
 ```
 
-## Future Enhancements
-- Allow customization of watermark opacity
-- Enable users to change font size and color
-- Add support for uploading images via drag-and-drop
-
 ## Links
+
 - Live App: [Watermark Web App](https://elizajasin.github.io/watermark-web/)
-- Repository: [GitHub - Watermark Web](https://github.com/elizajasin/watermark-web)
+- Repository: [GitHub — watermark-web](https://github.com/elizajasin/watermark-web)
 
 ## License
-This project is open-source and free to use.
 
+This project is open-source and free to use.
