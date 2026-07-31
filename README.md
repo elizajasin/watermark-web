@@ -1,8 +1,8 @@
-# Watermark
+# Watermarkin
 
 A simple, privacy-first web app for adding a text watermark to any image — right in your browser. **Nothing is ever uploaded.** Every pixel is processed locally using the Canvas API, so your images never leave your device.
 
-🔗 **Live app:** [elizajasin.github.io/watermark-web](https://elizajasin.github.io/watermark-web/)
+🔗 **Live app:** [watermarkin.my.id](https://watermarkin.my.id/)
 
 ## Features
 
@@ -22,7 +22,9 @@ A simple, privacy-first web app for adding a text watermark to any image — rig
 
 ## Privacy
 
-This app does not store, transmit, or upload any user data. All image processing happens locally in your browser via the HTML5 Canvas API. You can use it with sensitive images with confidence.
+This app does not store, transmit, or upload any user data — all image processing happens locally in your browser via the HTML5 Canvas API. You can use it with sensitive images with confidence.
+
+The site uses [GoatCounter](https://www.goatcounter.com/) for privacy-friendly analytics (cookieless, no personal data collected) to measure basic usage like pageviews and downloads — it never has access to your images.
 
 ## Technologies Used
 
@@ -62,13 +64,15 @@ watermark-web/
 │-- styles.css       # Styling for the app
 │-- app.js           # Watermarking logic (Canvas API)
 │-- favicon.svg      # App icon
+│-- og-image.png     # Social share preview image
+│-- CNAME            # Custom domain for GitHub Pages
 │-- package.json     # Project dependencies and scripts
 │-- README.md        # Project documentation
 ```
 
 ## Links
 
-- Live App: [Watermark Web App](https://elizajasin.github.io/watermark-web/)
+- Live App: [Watermarkin](https://watermarkin.my.id/)
 - Repository: [GitHub — watermark-web](https://github.com/elizajasin/watermark-web)
 
 ## License
