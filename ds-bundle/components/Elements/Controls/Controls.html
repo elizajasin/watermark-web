@@ -1,0 +1,56 @@
+<!-- @dsCard group="Elements" -->
+<link rel="stylesheet" href="../../../styles.css">
+<div style="padding: 24px; background: var(--bg); max-width: 380px;">
+  <div class="panel">
+    <div class="panel-body">
+      <div class="field">
+        <div class="field-head">
+          <span class="field-label">Watermark text</span>
+        </div>
+        <input class="text-input" type="text" value="CONFIDENTIAL">
+      </div>
+      <div class="field">
+        <div class="field-head">
+          <span class="field-label">Opacity</span>
+          <span class="field-value">35%</span>
+        </div>
+        <input type="range" min="0" max="100" value="35">
+      </div>
+      <div class="field">
+        <div class="field-head">
+          <span class="field-label">Style</span>
+        </div>
+        <div class="segmented">
+          <button class="seg is-active">Tiled</button>
+          <button class="seg">Single</button>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-head">
+          <span class="field-label">Color</span>
+        </div>
+        <div class="swatches">
+          <button class="swatch is-light is-selected" style="background:#FFFFFF"></button>
+          <button class="swatch" style="background:#1B1A17"></button>
+          <button class="swatch" style="background:#2E5BFF"></button>
+          <button class="swatch" style="background:#FF3B30"></button>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-head">
+          <span class="field-label">File</span>
+        </div>
+        <div class="file-meta">
+          <span class="file-pill">holiday-photo.jpg</span>
+          <span class="file-dims">2400 × 1600</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn-secondary">Replace image</button>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <button class="btn-primary">Download watermarked image</button>
+    </div>
+  </div>
+</div>

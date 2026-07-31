@@ -1,0 +1,13 @@
+:root {
+  --bg: #FBFBF9;
+  --panel: #ffffff;
+  --ink: #1B1A17;
+  --muted: #75736C;
+  --faint: #A9A79F;
+  --border: #ECEAE3;
+  --border-strong: #DEDCD4;
+  --field-bg: #FAFAF8;
+  --field-border: #E2E0D8;
+  --accent: #2E5BFF;
+  --accent-soft: #EEF1FF;
+}
