@@ -39,6 +39,12 @@ const state = {
 const img = new Image();
 const ctx = els.canvas.getContext('2d');
 
+function trackEvent(path, title) {
+  if (window.goatcounter && window.goatcounter.count) {
+    window.goatcounter.count({ path, title, event: true });
+  }
+}
+
 img.onload = () => {
   state.hasImage = true;
   els.dropzone.hidden = true;
@@ -48,6 +54,7 @@ img.onload = () => {
   els.downloadBtn.disabled = false;
   els.downloadBtn.textContent = 'Download image';
   draw();
+  trackEvent('image-loaded', 'Image loaded');
 };
 
 function hexToRgba(hex, a) {
@@ -234,6 +241,7 @@ els.downloadBtn.addEventListener('click', () => {
   link.download = base + '-watermarked.png';
   link.href = els.canvas.toDataURL('image/png');
   link.click();
+  trackEvent('image-downloaded', 'Image downloaded');
 });
 
 // Initial selected swatch
