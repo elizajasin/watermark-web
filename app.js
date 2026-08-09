@@ -237,11 +237,18 @@ els.position.addEventListener('change', (e) => { state.position = e.target.value
 els.downloadBtn.addEventListener('click', () => {
   if (!state.hasImage) return;
   const base = (state.fileName || 'image').replace(/\.[^.]+$/, '');
-  const link = document.createElement('a');
-  link.download = base + '-watermarked.png';
-  link.href = els.canvas.toDataURL('image/png');
-  link.click();
-  trackEvent('image-downloaded', 'Image downloaded');
+  els.canvas.toBlob((blob) => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = base + '-watermarked.png';
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+    trackEvent('image-downloaded', 'Image downloaded');
+  }, 'image/png');
 });
 
 // Initial selected swatch
