@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Watermarkin — bulk compress images in your browser</title>
+  <meta name="description" content="Bulk compress JPG, PNG and WEBP images (kompres foto, kecilkan ukuran gambar) in your browser. Nothing is uploaded — your images never leave your device." />
+  <meta name="theme-color" content="#FBFBF9" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="canonical" href="https://watermarkin.my.id/compress.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Watermarkin" />
+  <meta property="og:title" content="Watermarkin — bulk compress images in your browser" />
+  <meta property="og:description" content="Shrink one photo or a whole batch, then download them one by one or as a .zip. Nothing is uploaded — everything runs right in your browser." />
+  <meta property="og:url" content="https://watermarkin.my.id/compress.html" />
+  <meta property="og:image" content="https://watermarkin.my.id/og-compress.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Watermarkin — bulk compress images in your browser" />
+  <meta name="twitter:description" content="Shrink one photo or a whole batch, then download them one by one or as a .zip. Nothing is uploaded — everything runs right in your browser." />
+  <meta name="twitter:image" content="https://watermarkin.my.id/og-compress.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script data-goatcounter="https://elizajasin.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body class="compress-page">
+  <header class="site-header">
+    <div class="wordmark">Watermarkin<span class="dot"></span></div>
+    <nav aria-label="Tools" class="segmented tool-nav">
+      <a href="./" class="seg">Watermark</a>
+      <a href="compress.html" class="seg is-active" aria-current="page">Compress</a>
+    </nav>
+  </header>
+
+  <!-- Queue + settings -->
+  <main class="layout" id="queueView">
+    <section class="preview-col">
+      <div class="intro">
+        <h1>Compress your images</h1>
+        <p class="only-wide">Shrink one photo or a whole batch at once. Everything runs in your browser — your images are never uploaded or stored. Kompres foto biar ukurannya lebih kecil, gratis dan langsung di perangkatmu.</p>
+        <p class="only-narrow">One photo or a whole batch. Runs in your browser — never uploaded or stored.</p>
+      </div>
+
+      <button type="button" id="dropzone" class="dropzone dropzone-row">
+        <span class="dz-icon">
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"></path></svg>
+        </span>
+        <span class="dz-text">
+          <span class="dz-title" id="dropTitle">Add images</span>
+          <span class="dz-hint only-wide">Drop files here or click to browse — select as many as you like</span>
+          <span class="dz-hint only-narrow">Choose from Photos or Files</span>
+        </span>
+        <span class="dz-formats">PNG · JPG · WEBP</span>
+      </button>
+
+      <p id="notice" class="notice" role="status" hidden></p>
+
+      <div class="image-card queue-card">
+        <div class="image-card-bar">
+          <div class="file-meta">
+            <span class="field-label">Queue</span>
+            <span class="file-pill" id="queuePill">0 images</span>
+          </div>
+          <button type="button" id="clearBtn" class="btn-secondary" disabled>Clear all</button>
+        </div>
+
+        <div id="queueEmpty" class="queue-empty">
+          <div class="dz-title">Your queue is empty</div>
+          <div class="dz-sub">Add images above to compress them.</div>
+        </div>
+
+        <ul id="queueList" class="file-list is-collapsed"></ul>
+        <button type="button" id="showMoreBtn" class="show-more" hidden>Show more</button>
+      </div>
+
+      <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" multiple hidden />
+    </section>
+
+    <aside class="controls-col">
+      <div class="panel">
+        <div class="panel-body" id="settings">
+          <div class="field">
+            <div class="field-head">
+              <span class="field-label">Compression level</span>
+              <span class="field-value" id="levelVal">Medium</span>
+            </div>
+
+            <div class="level-list">
+              <button type="button" class="level" data-level="high" aria-pressed="false">
+                <span class="level-radio" aria-hidden="true"></span>
+                <span class="level-icon" aria-hidden="true">
+                  <svg width="18" height="20" viewBox="0 0 18 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l6 5 6-5M3 9l6 5 6-5M3 15l6 4 6-4"></path></svg>
+                </span>
+                <span class="level-text">
+                  <span class="level-name">High</span>
+                  <span class="level-desc">Smallest size, standard quality.</span>
+                </span>
+                <span class="level-est">
+                  <span class="level-size">—</span>
+                  <span class="level-pct"></span>
+                </span>
+              </button>
+              <button type="button" class="level" data-level="medium" aria-pressed="true">
+                <span class="level-radio" aria-hidden="true"></span>
+                <span class="level-icon" aria-hidden="true">
+                  <svg width="18" height="16" viewBox="0 0 18 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l6 5 6-5M3 9l6 5 6-5"></path></svg>
+                </span>
+                <span class="level-text">
+                  <span class="level-name">Medium</span>
+                  <span class="level-desc">Balanced size and quality.</span>
+                </span>
+                <span class="level-est">
+                  <span class="level-size">—</span>
+                  <span class="level-pct"></span>
+                </span>
+              </button>
+              <button type="button" class="level" data-level="low" aria-pressed="false">
+                <span class="level-radio" aria-hidden="true"></span>
+                <span class="level-icon" aria-hidden="true">
+                  <svg width="18" height="10" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l6 5 6-5"></path></svg>
+                </span>
+                <span class="level-text">
+                  <span class="level-name">Low</span>
+                  <span class="level-desc">Largest size, highest quality.</span>
+                </span>
+                <span class="level-est">
+                  <span class="level-size">—</span>
+                  <span class="level-pct"></span>
+                </span>
+              </button>
+            </div>
+
+            <div class="or-divider" aria-hidden="true"><span class="footer-note">OR</span></div>
+
+            <div class="level-manual" id="manualBox">
+              <button type="button" class="level" data-level="manual" aria-pressed="false">
+                <span class="level-radio" aria-hidden="true"></span>
+                <span class="level-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"></path><circle cx="16" cy="7" r="2"></circle><circle cx="10" cy="17" r="2"></circle></svg>
+                </span>
+                <span class="level-text">
+                  <span class="level-name">Manual</span>
+                  <span class="level-desc">Set your own balance</span>
+                </span>
+                <span class="level-est">
+                  <span class="level-size">—</span>
+                  <span class="level-pct"></span>
+                </span>
+              </button>
+              <div class="field manual-field">
+                <div class="field-head">
+                  <label class="field-label" for="quality">Quality</label>
+                  <span class="field-value" id="qualityVal">60%</span>
+                </div>
+                <input id="quality" type="range" min="10" max="95" step="1" value="60" />
+                <div class="range-ends">
+                  <span class="file-dims">Smaller file</span>
+                  <span class="file-dims">Better quality</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label">Output format</span>
+            <div class="segmented" id="formatSeg">
+              <button type="button" class="seg is-active" data-format="keep" aria-pressed="true"><span class="only-wide">Keep original</span><span class="only-narrow">Original</span></button>
+              <button type="button" class="seg" data-format="jpg" aria-pressed="false">JPG</button>
+              <button type="button" class="seg" data-format="webp" aria-pressed="false">WEBP</button>
+            </div>
+            <span class="field-hint" id="formatHint">Each image keeps its own file type.</span>
+          </div>
+        </div>
+
+        <div class="panel-footer cta-bar">
+          <button id="compressBtn" type="button" class="btn-primary" disabled>Add images to start</button>
+          <div id="progress" class="progress" hidden><span id="progressBar"></span></div>
+          <span class="cta-note" id="ctaNote">
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+            <span class="only-wide">Processed on your device. Nothing is uploaded or stored.</span>
+            <span class="only-narrow">Processed on your device. Nothing is uploaded.</span>
+          </span>
+          <button type="button" id="cancelBtn" class="link-btn" hidden>Cancel</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Results -->
+  <main class="layout" id="doneView" hidden>
+    <section class="preview-col">
+      <div class="intro">
+        <h1>Your images are ready</h1>
+        <p>Download them one by one, or grab everything in a single .zip. They exist only in this tab — nothing was uploaded.</p>
+      </div>
+
+      <div class="image-card queue-card">
+        <div class="image-card-bar">
+          <div class="file-meta">
+            <span class="field-label">Compressed</span>
+            <span class="file-pill" id="donePill">0 of 0 done</span>
+          </div>
+          <span class="file-dims" id="doneSettings"></span>
+        </div>
+        <ul id="resultList" class="file-list"></ul>
+      </div>
+    </section>
+
+    <aside class="controls-col">
+      <div class="panel">
+        <div class="panel-body summary">
+          <div class="summary-head">
+            <span class="summary-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+            </span>
+            <span class="field-label">Compression complete</span>
+          </div>
+
+          <div class="summary-figure">
+            <span class="summary-pct" id="sumPct">0%</span>
+            <span class="summary-sub" id="sumSub"></span>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat">
+              <span class="field-label">Before</span>
+              <span class="stat-value is-muted" id="sumBefore">—</span>
+            </div>
+            <div class="stat">
+              <span class="field-label">After</span>
+              <span class="stat-value" id="sumAfter">—</span>
+            </div>
+          </div>
+
+          <div class="callout">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+            <span>We don't keep a copy. Download before you close or refresh this tab — your compressed images will be cleared.</span>
+          </div>
+        </div>
+
+        <div class="panel-footer cta-bar">
+          <button type="button" id="zipBtn" class="btn-primary with-icon">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+            <span id="zipLabel">Download all (.zip)</span>
+          </button>
+          <button type="button" id="moreBtn" class="btn-secondary btn-block">Compress more images</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-note">100% client-side · no uploads · privacy-friendly analytics</span>
+    <span class="footer-note">Built by <a href="https://github.com/elizajasin" target="_blank" rel="noopener">@elizajasin</a> · <a href="https://ko-fi.com/elizajasin" target="_blank" rel="noopener">Support this project</a></span>
+  </footer>
+
+  <script type="module" src="compress.js"></script>
+</body>
+</html>
